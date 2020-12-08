@@ -50,7 +50,7 @@ Per default, Cupid comes with these fuzzers:
 
 * [LibFuzzer](https://llvm.org/docs/LibFuzzer.html)
 
-* [QSYM]([https://github.com/sslab-gatech/qsym)
+* [QSYM](https://github.com/sslab-gatech/qsym)
 
 * [Radamsa](https://gitlab.com/akihe/radamsa)
 
@@ -83,7 +83,7 @@ python3 -m pip install python-ptrace oslo_concurrency
 And then we need to build and install a custom Python package that is used to quickly track branch coverage:
 
 ```shell
-$ git clone git@github.com:egueler/quickcov.git
+$ git clone https://github.com/egueler/quickcov.git
 $ cd quickcov
 $ ./build.sh
 # check if it worked:
