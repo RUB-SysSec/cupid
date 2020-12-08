@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 import os, pickle, multiprocessing, time
 from misc import *
@@ -8,7 +8,6 @@ from oslo_concurrency import lockutils
 from oslo_concurrency import processutils
 
 CM_BASEDIR = "/dev/shm"
-RAND_SLEEP = 10
 
 class CoreManager(metaclass=Singleton):
 
@@ -36,8 +35,6 @@ class CoreManager(metaclass=Singleton):
     self.all_cores = list(range(multiprocessing.cpu_count()))
     self.occupied_cores = []
 
-    # random sleep - hacky way to solve concurrency issues
-    #time.sleep(random.random()*RAND_SLEEP)
     # determine cores by looking up what everybody else uses (they all dump files with information)
     
     if os.path.isfile(self.cms_path):

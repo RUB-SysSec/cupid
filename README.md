@@ -1,24 +1,12 @@
-# Cupid: Automatic Fuzzer Selection for Collaborative Fuzzing
+# Cupid
 
-Get the paper [here](https://www.ei.ruhr-uni-bochum.de/media/emma/veroeffentlichungen/2020/09/26/ACSAC20-Cupid_TiM9H07.pdf).
-
-Citation:
-
-```
-@article{cupid,
-  title={Cupid: Automatic Fuzzer Selection for Collaborative Fuzzing},
-  author={G{\"u}ler, Emre and G{\"o}rz, Philipp and Geretto, Elia and Jemmett, Andrea and {\"O}sterlund, Sebastian and Bos, Herbert and Giuffrida, Cristiano and Holz, Thorsten}
-  booktitle = {Annual Computer Security Applications Conference (ACSAC)},
-  doi = {10.1145/3427228.3427266},
-  year = {2020}
-}
-```
+This is the code for our ACSAC 2020 paper: "[Cupid: Automatic Fuzzer Selection for Collaborative Fuzzing](https://www.ei.ruhr-uni-bochum.de/media/emma/veroeffentlichungen/2020/09/26/ACSAC20-Cupid_TiM9H07.pdf)".
 
 # About
 
 The idea behind Cupid is to automatically collect data on how well different fuzzers perform on a diverse set of binaries and use this data to predict which combination of fuzzers will perform well when executed in collaboration (i.e. in parallel - also called ensemble fuzzing). 
 
-In previous research, [EnFuzz](https://www.usenix.org/system/files/sec19-chen-yuanliang.pdfhttps://www.usenix.org/system/files/sec19-chen-yuanliang.pdf) has shown that, in collaborative fuzzing scenarios, there is a difference in performance between choosing multiple instances of the same fuzzer and using a *diverse* set of fuzzers. We expand on this idea by avoiding the human expert guidance that was necessary to select the fuzzers and instead we use an automatic, data-driven approach.
+In prior research, [EnFuzz](https://www.usenix.org/system/files/sec19-chen-yuanliang.pdfhttps://www.usenix.org/system/files/sec19-chen-yuanliang.pdf) has shown that in collaborative fuzzing scenarios there is a difference in performance between multiple instances of the same fuzzer and using a *diverse* set of fuzzers. We expand on this idea by avoiding the human expert guidance that was necessary to select the fuzzers - instead, we use an automatic, data-driven approach.
 
 In Cupid, we basically:
 
@@ -66,7 +54,7 @@ We have forked and extended [LibFuzzer](https://github.com/phi-go/llvm-project/t
 
 As Cupid needs to build docker images for all fuzzers and let each of them build their own binaries (to avoid problems with different instrumentation methods), building all images can take up to 100GB of disk space. There is room for improvement here, e.g., some of the fuzzers could share the same binaries etc. But as of yet, no such fix is planned, so this is the only way to build the images right now. But you can jump to our artifact evaluation section below to find out how to remove some of the fuzzers and binaries if you don't have enough space.
 
-## Install
+## Build
 
 You need Python 3 (we've tested the code with v3.6.9, you should have at least the same version because we use some Python futures that are unavailable in older versions). And you need to install screen (Ubuntu 18.04 example):
 
@@ -86,7 +74,7 @@ And then we need to build and install a custom Python package that is used to qu
 $ git clone https://github.com/egueler/quickcov.git
 $ cd quickcov
 $ ./build.sh
-# check if it worked:
+# check if it works:
 $ python3 -c "import quickcov"
 ```
 
@@ -98,7 +86,7 @@ In the first step, build all the necessary images by calling:
 $ ./docker/build.sh
 ```
 
-The script should abort in case of error. 
+The script should abort in case of error.  This may take several hours to complete.
 
 ## Run
 
@@ -122,14 +110,24 @@ Now find out what the pickle file is called via `ls` and execute this to generat
 $ python3 plot.py [name].pickle
 ```
 
-If you needed to abort one of the `control.py` runs, you probably aborted the cleanup stage. To cleanup all docker containers that might be still fuzzing in the background, run:
+If you abort the `control.py` run prematurely, you've aborted the cleanup stage. To cleanup all docker containers and screen sessions which might still be running in the background, run:
 
 ```
 $ python3 stop.py
 ```
 
-
-
 # Artifact Evaluation
 
 Please refer to our [artifact evaluation page here](https://github.com/egueler/cupid-artifact-eval) for more information.
+
+# Citation
+
+```
+@article{cupid,
+  title={Cupid: Automatic Fuzzer Selection for Collaborative Fuzzing},
+  author={G{\"u}ler, Emre and G{\"o}rz, Philipp and Geretto, Elia and Jemmett, Andrea and {\"O}sterlund, Sebastian and Bos, Herbert and Giuffrida, Cristiano and Holz, Thorsten}
+  booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+  doi = {10.1145/3427228.3427266},
+  year = {2020}
+}
+```

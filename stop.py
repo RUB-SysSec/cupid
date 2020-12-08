@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 import os, multiprocessing, shutil, glob, sys, re
 from pathlib import Path
