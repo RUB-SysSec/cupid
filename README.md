@@ -6,7 +6,7 @@ This is the code for our ACSAC 2020 paper: "[Cupid: Automatic Fuzzer Selection f
 
 The idea behind Cupid is to automatically collect data on how well different fuzzers perform on a diverse set of binaries and use this data to predict which combination of fuzzers will perform well when executed in collaboration (i.e. in parallel - also called ensemble fuzzing). 
 
-In prior research, [EnFuzz](https://www.usenix.org/system/files/sec19-chen-yuanliang.pdfhttps://www.usenix.org/system/files/sec19-chen-yuanliang.pdf) has shown that in collaborative fuzzing scenarios there is a difference in performance between multiple instances of the same fuzzer and using a *diverse* set of fuzzers. We expand on this idea by avoiding the human expert guidance that was necessary to select the fuzzers - instead, we use an automatic, data-driven approach.
+In prior research, [EnFuzz](https://www.usenix.org/system/files/sec19-chen-yuanliang.pdfhttps://www.usenix.org/system/files/sec19-chen-yuanliang.pdf) has shown that in collaborative fuzzing scenarios there is a difference in performance between multiple instances of the same fuzzer and using a *diverse* set of fuzzers. We expand on this idea by avoiding the human expert guidance that was necessary to select the diverse set of fuzzers - instead, we use an automatic, data-driven approach to predict which fuzzers will *complementary*.
 
 In Cupid, we basically:
 
@@ -32,21 +32,23 @@ Per default, Cupid comes with these fuzzers:
 
 * [FairFuzz](https://github.com/carolemieux/afl-rb)
 
-* [Honggfuzz](https://github.com/google/honggfuzz)
+* [lafintel](https://gitlab.com/laf-intel/laf-llvm-pass)<sup>1</sup>
 
-* lafintel<sup>1</sup>
+* [Honggfuzz](https://github.com/google/honggfuzz)<sup>2</sup>
 
-* [LibFuzzer](https://llvm.org/docs/LibFuzzer.html)
+* [LibFuzzer](https://llvm.org/docs/LibFuzzer.html)<sup>2</sup>
 
 * [QSYM](https://github.com/sslab-gatech/qsym)
 
-* [Radamsa](https://gitlab.com/akihe/radamsa)
+* [Radamsa](https://gitlab.com/akihe/radamsa)<sup>3</sup>
 
 ¹It's not really lafintel, as Google's fuzzer-test-suite did not build with the LLVM passes, so it's just an old [AFL++](https://github.com/AFLplusplus/AFLplusplus) version with compcov instead.
 
-For specific version numbers, please refer to our paper.
+²We have forked and extended [LibFuzzer](https://github.com/phi-go/llvm-project/tree/fuzzer_sync) and [Honggfuzz](https://github.com/phi-go/honggfuzz/tree/2.0_w_sync) to support AFL-style exchange of corpus seeds. To our understanding, this is the first cross-fuzzer implementation of corpus synchronisation between afl-based fuzzers and LibFuzzer/Honggfuzz in both directions.
 
-We have forked and extended [LibFuzzer](https://github.com/phi-go/llvm-project/tree/fuzzer_sync) and [Honggfuzz](https://github.com/phi-go/honggfuzz/tree/2.0_w_sync) to support AFL-style exchange of corpus seeds. To our understanding, this is the first cross-fuzzer implementation of corpus synchronisation between afl-based fuzzers and LibFuzzer/Honggfuzz in both directions.
+³This is AFL++ in Radamsa mode.
+
+For specific version numbers, please refer to our paper.
 
 # Usage
 
