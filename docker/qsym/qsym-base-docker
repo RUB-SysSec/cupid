@@ -1,0 +1,15 @@
+FROM ubuntu:16.04
+
+RUN apt-get update
+RUN apt-get install -y git build-essential sudo
+
+RUN mkdir -p /workdir/qsym
+
+WORKDIR /workdir/qsym
+COPY . /workdir/qsym
+
+RUN ./setup.sh
+RUN pip install --upgrade pip 
+RUN pip install "pytest<5"
+RUN pip install . --upgrade
+RUN cd tests/; python build.py
