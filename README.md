@@ -60,17 +60,17 @@ As Cupid needs to build docker images for all fuzzers and let each of them build
 
 You need Python 3 (we've tested the code with v3.6.9, you should have at least the same version because we use some Python futures that are unavailable in older versions). And you need to install screen (Ubuntu 18.04 example):
 
-```
-sudo apt install python3 screen
+```shell
+$ sudo apt install python3 screen
 ```
 
 We have to install some Python packages:
 
-```
-python3 -m pip install python-ptrace oslo_concurrency
+```shell
+$ python3 -m pip install python-ptrace oslo_concurrency
 ```
 
-And then we need to build and install a custom Python package that is used to quickly track branch coverage:
+And then we need to build and install our custom Python package that is used to quickly track branch coverage ([QuickCov](https://github.com/egueler/quickcov)):
 
 ```shell
 $ git clone https://github.com/egueler/quickcov.git
@@ -106,13 +106,17 @@ Explanation for the parameters:
 
 `--binary` can be any of these values: `base64, md5sum, who, uniq, boringssl, c-ares, freetype2, guetzli, harfbuzz, json, lcms, libarchive, libjpeg-turbo, libpng, libssh, libxml2, llvm-libcxxabi, openssl-1.0.1f, openssl-1.0.2d, openssl-1.1.0c, openthread, pcre2, proj4, re2, sqlite, vorbis, woff2, wpantund`, where the first four binaries are from LAVA-M (`base64, md5sum, who, uniq`) and the rest is from [Google's fuzzer-test-suite](https://github.com/google/fuzzer-test-suite).
 
-Now find out what the pickle file is called via `ls` and execute this to generate a branch coverage plot:
+## Parse Pickle file
+
+Now you can parse the `plot-[rand].pickle` pickle file that was dumped to the Cupid directory, to use the data however you like, generate a plot etc. There is also a `timestmaps-[rand].pickle` file which has all the creation dates for the queue files. We've provided an example `dump.py` to display the content of these files: 
 
 ```shell
-$ python3 plot.py [name].pickle
+$ python3 dump.py plot-123.pickle
 ```
 
-If you abort the `control.py` run prematurely, you've aborted the cleanup stage. To cleanup all docker containers and screen sessions which might still be running in the background, run:
+## Stop
+
+Cupid will stop automatically once timeout is reached. If you abort the `control.py` run prematurely, you've aborted the cleanup stage. To cleanup all docker containers and screen sessions which might still be running in the background, run:
 
 ```
 $ python3 stop.py
