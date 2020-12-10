@@ -42,7 +42,6 @@ class CoreManager(metaclass=Singleton):
         cms = pickle.load(f)
     else:
       cms = {}
-    #cms = {Path(x).name.replace('cms_', ''): os.path.join(CM_BASEDIR, x) for x in os.listdir(CM_BASEDIR) if Path(x).name.startswith("cms_")}
     # filter out all pid's which exist even though the process doesn't exist anymore
     cms = {pid: cores for pid,cores in cms.items() if check_pid(pid) and "control.py" in pid_to_name(pid)}
     # load all information from every pid to determine the cores we can use

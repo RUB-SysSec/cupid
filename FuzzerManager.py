@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 import copy
-from QueueNode import *
-from QueueTree import *
 from config import *
 from threading import Lock
 import quickcov
@@ -157,19 +155,6 @@ class FuzzerManager:
     if only_afl_queue:
       files = filter_only_afl_queue_files(files)
     return self._get_coverage_for_files(files)
-
-  def get_impact(self, fuzzer, min_time=MIN_TIME, max_time=MAX_TIME):
-    cov_files = filter_only_afl_files(self.get_coverage_files())
-    root = QueueTree(cov_files)
-    sync_seeds = []
-    for sync_name in fuzzer.get_sync_names():
-      sync_seeds.extend(root.find_sync_nodes_by_fuzzer(sync_name))
-    queue = set([])
-    for s in sync_seeds:
-      queue.add(s.filename)
-      queue.update(set([x.filename for x in s.get_all_children()]))
-    queue = self._filter_files_by_time(list(queue), min_time, max_time)
-    return self._get_coverage_for_files(queue)
 
   def get_total_coverage(self, filter_redundant_files=True):
     # we don't want any sync files

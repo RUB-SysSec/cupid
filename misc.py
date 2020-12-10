@@ -14,11 +14,6 @@ def check_afl():
       performance_set = performance_set & (f.read().strip() == 'performance')
   return core_set & performance_set
 
-def update_screenrc():
-  screenrcPath = os.path.expanduser("~/.screenrc")
-  if not os.path.isfile(screenrcPath) or "defnonblock on" not in open(screenrcPath, "r").read():
-    os.system("echo defnonblock on >> %s" % screenrcPath)
-
 def get_shell(cmd):
   process = subprocess.Popen(cmd, shell=True,
                              stdout=subprocess.PIPE, 

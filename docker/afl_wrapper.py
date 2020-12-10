@@ -4,7 +4,7 @@ import sys, os, signal, time, glob, fcntl, argparse, hashlib
 from shutil import copyfile
 
 terminateMe = False
-mem = set() # honggfuzz to afl cache
+mem = set() # afl cache
 other_fuzzers_mem = set() # cache for sync of other fuzzers
 counter = 0
 other_fuzzer_counter = 0
@@ -36,10 +36,10 @@ def watcher(src, dest, fuzzer_dirs, sync_dir, sleep_time):
   os.system("mkdir -p %s" % dest_with_queue)
 
   while not terminateMe:
-    # scan honggfuzz dir for new output and copy it afl style
+    # scan dir for new output and copy it afl style
     queue = [f for f in getQueueFiles(src) if f not in mem]
     mem.update(queue)
-    print "Found %d new honggfuzz files that need to be afl-style" % len(queue)
+    print "Found %d new files that need to be afl-style" % len(queue)
     for f in queue:
       mem.add(f)
       name = "id:{i},src:000000,op:wrp".format(i="%06d" % counter)

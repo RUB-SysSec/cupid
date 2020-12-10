@@ -7,19 +7,6 @@ from CoreManager import *
 import quickcov
 import json, hashlib
 
-"""
-fuzzer.init(binary, binary_arguments)
-fuzzer.pause() # pause docker image
-fuzzer.start() # start/resume docker image 
-fuzzer.update(config={"core": 0}) #update the configuration of this fuzzer (i.e. set core to 0, set cpu share percentage to 20% etc.)
-fuzzer.setCore(0) # easier access to often-used configuration options
-fuzzer.getType() # "afl", "qsym" etc.
-fuzzer.getID() # the id of this specific fuzzer object (also used as a directory path)
-fuzzer.getCoverageFiles() # returns all files relevant for code coverage measurement
-fuzzer.getCoverage(files=None) # if files=None, go through all folders and return code coverage, if files is list, get code coverage for these files (Code Coverage is quickcov.AFLBitmap)
-"""
-
-
 DOCKER_COMMAND = 'docker exec --user coll -u {user_id}:{group_id} -t {docker_name} bash -ic "{cmd}"'
 
 GLOBAL_INPUT_DIRECTORY  = get_input_dir()
@@ -147,20 +134,6 @@ class Fuzzer:
                                                                      command=cmd))
 
   def _get_other_fuzzer_dirs(self):
-    # fuzzer_dirs = []
-    # if self.fuzzer_manager is not None:
-    #   print(self.fuzzer_manager.fuzzers)
-    #   for f in self.fuzzer_manager.fuzzers:
-    #     if f != self:
-    #       print(f.directories)
-    #       for d in f.directories:
-    #         if os.path.isdir(d):
-    #           fuzzer_dirs.append(d)
-    #         queue_subdir = os.path.join(d, "queue")
-    #         if os.path.isdir(queue_subdir):
-    #           fuzzer_dirs.append(queue_subdir)
-    # fuzzer_dirs = list(set(fuzzer_dirs))
-    # return fuzzer_dirs
     return [self.output_directory]
 
 
