@@ -2,6 +2,10 @@
 
 This is the code for our ACSAC 2020 paper: "[Cupid: Automatic Fuzzer Selection for Collaborative Fuzzing](https://www.ei.ruhr-uni-bochum.de/media/emma/veroeffentlichungen/2020/09/26/ACSAC20-Cupid_TiM9H07.pdf)".
 
+<p>
+<a href="https://www.ei.ruhr-uni-bochum.de/media/emma/veroeffentlichungen/2020/09/26/ACSAC20-Cupid_TiM9H07.pdf"> <img align="right" width="200"  src="https://github.com/RUB-SysSec/cupid/raw/main/paper.png"> </a>
+</p>
+
 # About
 
 The idea behind Cupid is to automatically collect data on how well different fuzzers perform on a diverse set of binaries and use this data to predict which combination of fuzzers will perform well when executed in collaboration (i.e. in parallel - also called ensemble fuzzing). 
